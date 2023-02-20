@@ -18,7 +18,7 @@ class graph_1:
         self._amplitude_cos = amplitude_cos
         self._cycles = cycles
 
-    def create(self, num_samples: int = 1000):
+    def _create(self, num_samples: int = 1000):
         # Define the start and end of the graph
         T = 1 / self._f_sin
         graph_start = 0
@@ -33,23 +33,20 @@ class graph_1:
         signal = sin + cos
 
         return (t, signal)
+    
+    def plot_labels(self):
+        plt.xlabel('Time [s]')
+        plt.ylabel('Amplitude')
+        plt.title(f'Signal: {self._name}')
+        plt.grid()
+        plt.show()
 
-    def show(self):
-        t, y = self.create()
-        plt.figure()
+    def plot(self):
+        t, y = self._create()
         plt.plot(t, y)
-        plt.xlabel('Time [s]')
-        plt.ylabel('Amplitude')
-        plt.title(f'Signal: {self._name}')
-        plt.grid()
-        plt.show()
+        self.plot_labels()
 
-    def show_samples(self, num_samples: int):
-        t, y = self.create(num_samples=num_samples)
-        plt.figure()
-        plt.plot(t, y, 'ro', markersize=5)
-        plt.xlabel('Time [s]')
-        plt.ylabel('Amplitude')
-        plt.title(f'Signal: {self._name}')
-        plt.grid()
-        plt.show()
+    def stem(self, num_samples: int):
+        t, y = self._create(num_samples=num_samples)
+        plt.stem(t, y, use_line_collection=True)
+        self.plot_labels()
